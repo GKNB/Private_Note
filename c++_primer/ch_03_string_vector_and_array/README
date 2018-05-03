@@ -1,0 +1,15 @@
+THESE ARE THE NOTES AND COMMENTS ABOUT C++_PRIMER_V5, SECOND CHAPTER
+
+NOTATION:
+ 
+NUMBER(1,2,3,...): keypoint we need to know
+Line start with #: that keypoint is very important
+Note: appendix of each keypoint
+PS: extra imformation about each Note, including things need to be know further
+      
+LET'S START!!!
+        
+----------------------------------------------------------------------------------------------------------------------------------
+
+1 when head file is renewed, we need to recompile every source file which includes that head file
+

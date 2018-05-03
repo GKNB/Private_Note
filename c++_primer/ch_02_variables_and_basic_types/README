@@ -1,0 +1,161 @@
+THESE ARE THE NOTES AND COMMENTS ABOUT C++_PRIMER_V5, SECOND CHAPTER
+
+NOTATION:
+ 
+NUMBER(1,2,3,...): keypoint we need to know
+Line start with #: that keypoint is very important
+Note: appendix of each keypoint
+PS: extra imformation about each Note, including things need to be know further
+      
+LET'S START!!!
+        
+----------------------------------------------------------------------------------------------------------------------------------
+
+1. c++ does type checkat compiling time, every variable must be given type at or before compiling time
+
+Note: there are two different types, depending on how memory is distributed. For static memory distrubuted type, the memory distribution has to be determined in compiling time (like std::array), for dynamic type, it can be determined in running, like std::vector
+
+PS: 1. what does compilier do when compiling
+    2. how is memory distributed (like stack and heap)
+    3. where does the information of type of each variable stored
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+2. if we assign an out-of-range value to unsigned variable, we get modulos of the initial value, if we did that to signed variable, UB!!!
+   similiar, if an expression involves both unsigned and signed variable, those signed will be transformed into unsigned, including all intermediate result
+
+Note: this rule actually describe how c++ stores signed variable, let's say we have a signed variable t, then t%(2^32) gives its unsigned value, but we also know that when c++ stores this variable, it doesn't know its type, so they share the same value in their address
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+3. c++ gives each literal both value and type, notice char in '' and string in "". list below are the summary for that
+   3.1.1 integer literal can be in decimal (default), octal (with 0 at the beginning, like 024, 8&9 is not allowed), hexadecimal (with 0x or 0X at the beginning) form
+   3.1.2 integer literal of decimal will have type int, long and long long depending on which type will their value fit in, hex and oct also includes unsigned version (5 types to fit)
+   3.1.3 the default type in 3.1.2 can be override by suffix u(U), l(L) and ll(LL) 
+   3.2.1 float point literal can be written using a decimal point or 'e'('E'), like 1.0 or 1e0 
+   3.2.2 float point literal have default type double
+   3.2.3 the default type in 3.2.2 can be override by suffix f(F), l(L)
+   3.3.1 string literal will have a '\0' at the end of it, means actual size = apparent size + 1
+   3.3.2 default type of string or char can be override by prefix u, U, L and L8
+   3.3.3 we can also use escape sequence as char literal, there are two kinds: \ followed by character and \x followed by hex or \ followed by 1-3 oct digits (usually ascii)
+
+Note: suffix and prefix can only modify the type listed above, e.g. 10f is not allowed, since 10 is not floating point
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+4.1 initialization is not assignment since no initial value is abandoned. we can initialize a variable by earlier variable defined in the same definition
+4.2 we can do initialization for int in 4 ways: a=0; a(0); a={0}; a{0}; those involve {} is called list initialization, a warning occurs when list initialization cause loss of information
+4.3 default init for built-in type gets 0 out of any func, UB in func; for class, depends on definition
+
+Note: if class doesn't specify the default init, in some case each member will follow the default init, like std::array (Is that always true?)
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+5. we can both define and declare a variable. define involves memory distribution, and can be done only once, we use extern to declare which can be override by initialize
+
+Note: (a). can't initialize an extern declarition inside a function
+      (b). the usage of extern: we define a global variable in some source file, then we declare it extern in a head file, then every file which includes this head file will know the existence of that variable, and when linking, it will try to find the place where we define it
+
+PS: notice when we define a variable inside a function, this variable has no external linkage, so we can't further extern it to give it a extern linkage
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+6. limits on identifier, the following are banned: start with number, start with 2 underscore, start with 1 underscore and a upper case letter, start with underscore outside function
+
+PS: where do we use them?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+7. A scope is usually within {}, eg. a for and if statement is a scope, so variable defined inside if statement also only has scope lifetime. We can access global scope by using scope operator "::", but other scope (like a scope defined by for) do not have specific name
+
+PS: how can I access parameter defined in parent scope?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+8. Declaration = base type + declarator;    declarator = identifier(name) and its modification (like * or &);   when we define multiple variable, we actually write declarator so each of them need a modification, like int *p, *q;
+
+PS: what are those different type of declarator?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+9.1 reference(&) is an alias of an variable, it's not an object, so no memory is distrubuted, operations on reference actually are on the object it binds
+9.2 reference has to be initialized(bind with other variable), after that we can't rebind it with other variable
+9.3 type of reference and that of the object it binds must match, and reference can't refer to expression and literal(which are rvalue)
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+10.1 pointer is an object, which means we don't need to initialize it, and it can be redirect to many objects, notice the initialization behave like other built-in type, and the type of pointer and the address of the object it points to has to match(otherwise we don't know how many bits the address will be and what operation we can apply on the object it points to)
+10.2 a valid pointer can only points to the following three things:
+10.2(a) an object(can access object it points to by *)
+10.2(b) null(can't access the object it points to), it has types(like int or double), and is defined by nullptr or 0(here 0 is overload as nullptr), can't be initialized by int value object even if it is 0, it's usually a good idea to initialize all pointer, if no object is binded, by 0
+10.2(c) location immediately past an object(can't access the object it points to)
+10.2(d) otherwise it is invalid pointer, but in most case it will only give a runtime error, or no apparent error
+10.3 pointer can also be used as condition or in comparision, but only valid ones can be used, otherwise it will be UB
+10.4 void pointer can store the address of variable of any type, because of that we can't access the variable it points to since we don't know the type, we can only compare, return or pass to a function, and assign to a void. if we want to use the objext it points to, we need to perform cast like void *p; (int*)p; *p=0;
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+11. For a compound type declaration, we read from right to left, eg. *&p means &p is a pointer, so p is a reference to a pointer
+
+PS1: what if we are dealing with function and array?
+PS2: what does (*) means?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+12.1 const variable can't change its value, so it has to be initialized
+12.2 const variable can't get itself involved in all operations, those changes it value are forbidden, but notice assign a non-const by const is allowed and vice versa
+12.3 const variable initialized by compile time constant will be replaced by this constant when compiled, so it is local to file by default(so that seperate compile can make such replacement), in which case if we define a const variable in each file as if they are different variable. This can be override   /*if its value is not a compile time constant (like return value of a function),*/   by keyword extern BOTH in its definition and declaration, which means if we want to share a const variable in multiple file, we add extern keyword
+12.4 we can define a reference to const(aka const reference) by define "const type &r", note only a const reference can refer to a const, and we can't change the value of a const reference, this design allow us to use const reference as argument of function and save sapce for not copying argument
+12.5 a const reference can be initialized by not only a const variable, but anything that can be cast into a const variable, e.g, "const int &r = 1.0" is legal, and is done by first create a temporary variable "const int tmp = 1.0" and then r refers to that variable. Note that temporary is not always necessary, if we don't need casting, then we don't need this temporary. This is important if we refer to a non-const variable, and try to assign this variable with new value. It is obvious that if a temporary is created, then assign a new value won't change const reference since it refers to that temporary, but if no temporary is created, assignment will change it!!! So const reference only make a restrict on what we can do on them rather than the variable we bind it with that we refer to
+12.6 same rule applies to pointer to reference, and we can also define const pointer, to see if const modify pointer or object it points, read from right to left, this two const won't affect each other, which means we can change the object a const pointer points to, or we can change which object a pointer to reference points to
+12.7 notice we can not assign a non-const reference or pointer to const with a const variable or its address, while the initialization of the reverse is allowed. In other words, const constrain the operations we can do on them
+12.8 top level const means an object is itself a const, a low level const means the object it links is a const, which can only appear as a base type, a const reference is a low level const, when we do copy, top level const on the rhs is ignored, while low level const is never ignored, so we can only copy a low level const by a low level nonconst, and can't do the opposite(which is because const->nonconst convert is forbidden)
+12.9 we can define variable constexpr so that they are const and initialized by a const expression(evaluated at compile time), and we can use a constexpr function as an initializer of constexpr variable. So only limited types support constexpr, which are called literal type, it includes arithmatic type and pointer and reference but not include most of classes we defined and string. 
+12.10 when we define variable as constexpr, it impose a top-level const onto that variable, so constexpr *p means p is a const pointer rather than it points to a const
+
+Note: reference to const and pointer to const are const in the sense that they think they point to const
+
+PS1: when does compilier need temporary?
+PS2: how can we use constexpr?
+PS3: how to understand const reference? when doing copy, is it treated as low-level or high-level? 
+    Maybe when we define a const reference, it is treated as low-level const, and then it is merely an alias of something else, and if it is top level or low level const depends on the variable it binds, if it binds a const int, then it is top level const
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+13. two ways to make type alias: 1. typedef old_name new_name. to memorize this, treat old_name as a declarator and new_name as a "variable". New_name can be a compound type when we modify the NEW_NAME, e.g. typedef int *p, 2. using new_name = old_name, here new_name can be a compound type if we modify OLD_NAME, e.g. using p = int*
+
+Note: when we define a new compound type, this new type is the base type and further const will modify this base type rather than the old base type, e.g. typedef double *p, const p is a const pointer to double rather than a pointer to const double. This is very different from macro which simply replace the new_name by old_name. If we want const to modify the old base type, we need const modifier when we do type alias, e.g. typedef const double
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+14.1 we can use auto to give variable a type which is consistent with its initializer expression, so we have to initialize a variable when declare it as auto, and auto as a base type has to be consistent when define multiple variable in the same line
+14.2 when compilier deduce the type, it will neglect(won't do that if we are dealing with auto &) top-level const and reference and only keep low-level const, if we want the variable to have top level const, we can add const in definition like const auto i
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+15.1 we can use decltype keyword to define a variable with type of the operand of decltype function without any initialization. Notice the expression in decltype function won't be evaluated, only a type check is done there
+15.2 when we use a variable as the operand of decltype function, the new variable will have exactly the same type as the derived one, including top-level const and reference, which is different from auto
+15.3 as for the type, we have the following rules(might not be true): a).unparenthesized variable name -> type of that variable when define that variable (notice the difference b/w type of that variable and the type we use to define that variable)  b). lvalue -> reference of that expression  c). xvalue -> && of that expression  d). otherwise -> type of that expression
+15.4 so decltype((variable)) is always a reference type
+
+Note: have to go back to https://stackoverflow.com/questions/17241614/what-expressions-yield-a-reference-type-when-decltype-is-applied-to-them which describes decltype in detail
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+16. when head file is renewed, we need to recompile every source file which includes that head file
+

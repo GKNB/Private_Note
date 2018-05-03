@@ -1,0 +1,75 @@
+THESE ARE THE NOTES AND COMMENTS ABOUT C++_PRIMER_V5, FIRST CHAPTER
+
+NOTATION:
+
+NUMBER(1,2,3,...): keypoint we need to know
+Line start with #: that keypoint is very important
+Note: appendix of each keypoint
+PS: extra imformation about each Note, including things need to be know further
+
+LET'S START!!!
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+1. when the program runs, it will first run main() funciton
+
+Note: we have several operations, including preprocessing, compliling, linking and running. Preprocessing runs code start with "#", compliling generate lots of .o file, which is the machine version of each file. The linking process link these .o file together so that one file can call functions in other files. Running will generate instance and ...
+
+PS: what error message would show up in each process?
+PS: what's the order of function check before running?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+2. the main function will have a return value, whether it is successfully run or dumped, we can use echo $? to get "command exit status", which in other words means the return (exit) value of a command (program)
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+3. we can think of the stream variable as something that interact with I/O, e.g, cout is an ostream object, and it interact with screen (window the program is running)
+
+PS: what is a stream basically?
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+4. Two concept when dealing with a complex expression: associativity (and precedence, precedence describe which operator to do first when opperand is sandwiched by two operator with different precedence, while associativity describe ... with same precedence) and evaluation order. Within an expression, the evaluation order can be unspecified, like f(x)+g(x)+h(x), we don't know which function is being calculated first. But left associative suggests we first calculate f(x)+g(x), then add h(x) (although we know what h(x) is before calculate f(x)+g(x)). In std::cout/cin, left association make sure that our expression is valid. 
+
+Note: detail can be found http://en.cppreference.com/w/cpp/language/eval_order and http://en.cppreference.com/w/cpp/language/operator_precedence. Importance of precedence can be seen in cout<<a+b<<endl (+prior to <<)
+
+PS: another confusing concept is the value of expression, like *p++, we know p++ is calculated first, but the value of p++ is unchanged, so *p++ gives the same result as *p, although after that p is increased, the order of solving such problem is:      1. determine the order of each operator;   2. based on the order, calculate the value of each operator (Notice here we combine value with each operator), and these operator will be treated as the expresion when we repeat step 1
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+5. comment sign can only be put somewhere a tab or space is allowed. Notice inside a pair of "", an extra space or tab will give different result, so comment sign is not allowed here (at least /* is not allowed)
+
+Note: nested comment is another error prone stuff, for /**/ pair, nest is not allowed, but for //, it doesn't matter to put more than one // in the same line. So the best way to do block comment is adding // in front of each line
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+#######
+6. in order to read an unknown number of items, we can use a while loop to handle the thing that we read everytime, and test istream object as the loop condition, e.g. if we want to read from command line, we can do while(cin>>var_name), and if we read from file, we can do while(file_object >> var_name >> ...) to read line. This will only end when the istream is invalid, which would happen if: 1. when we hit end-of-file sign; 2. when there is an error (invalid input)
+
+PS: invalid input could happen when there is a type mismatch, but the underlying mechanism (for stream) is a mystery at this moment????? (int a; while(cin>>a); we type: 3.3, what is a?)
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+7. instead of input by hand, we can also use file redirection to input from file. we can do program_name < input_file >output_file
+
+Note: the mechanism is connected to stream in linux ..... Also we might need to do ./program_file if it is not in PATH. instead of input by hand, we can also use file redirection to input from file. we can do program_name < input_file >output_file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

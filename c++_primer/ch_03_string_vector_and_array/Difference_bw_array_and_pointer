@@ -1,0 +1,22 @@
+1.a)    array has to be initialized by {} syntax, which means we can neither initialize it from name of another array, nor can we initialize it from some pointer
+        example:
+        int a[] = {...};    //ok
+        int b[] = a;        //error
+        int c[] = &a[0]     //error
+
+1.b)    array can't be assigned, either by another array or by a pointer
+        example:
+        int b[] = {...}     
+        a = b               //error
+        a = &b[0]           //error
+
+1.c)    char array can also be initialized by string literal (which makes it a c style string), but after that it can't be assigned by some other literal(1.b)
+        example:
+        char strc1[] = "gobida";
+        char strc2[30] = "dagoubi";     //here sizeof() and strlen() gives different result, since latter is defined through '\0'
+
+1.d)    whenwe try to define an array, normally we need to define it as T arr[], then list initialize it. With one exception: when we define char array, we can define it as T *arr and then initialize it by literal string
+        example:
+        int *arr = {1,2)        //error
+        char *arr = {'a', 'b'}  //error
+        char *arr = "ab"        //ok
