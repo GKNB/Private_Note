@@ -14,17 +14,19 @@ int trial1()
     string s3 = s2;
     string s4(1,'a');
     string s5 = "";
+    string s6 = "mom\0dad";
     s5.push_back('\0');
-    cout<<s1<<'\n'<<s2<<'\n'<<s3<<'\n'<<s4<<'\n'<<s5<<'\n';
+    cout<<s1<<'\n'<<s2<<'\n'<<s3<<'\n'<<s4<<'\n'<<s5<<'\n'<<s6<<'\n';
     cout<<s1.size()<<'\n';
     cout<<s2.size()<<'\n';
     cout<<s3.size()<<'\n';
     cout<<s4.size()<<'\n';
     cout<<s5.size()<<'\n';
+    cout <<s6.size()<<'\n';
 //    while(cin >> s1 >> s2 >> s3)
 //        cout << s1 << s2 << s3 << endl;
-    while(getline(cin,s4))
-        cout << "s4 = " << s4 << endl;
+//    while(getline(cin,s4))
+//        cout << "s4 = " << s4 << endl;
 //    string s7 = "a"  + "b" + "c";
 //    cout <<s7;
     return 1;
@@ -193,5 +195,6 @@ void arrpt()
 }
 int main()
 {
-    arrpt();
+  trial1();
+//    arrpt();
 }

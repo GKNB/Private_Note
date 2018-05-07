@@ -11,7 +11,7 @@ LET'S START!!!
         
 ----------------------------------------------------------------------------------------------------------------------------------
 
-1. c++ does type checkat compiling time, every variable must be given type at or before compiling time
+1. c++ does type check at compiling time, each variable must be given type at or before compiling time
 
 Note: there are two different types, depending on how memory is distributed. For static memory distrubuted type, the memory distribution has to be determined in compiling time (like std::array), for dynamic type, it can be determined in running, like std::vector
 
@@ -42,6 +42,7 @@ Note: this rule actually describe how c++ stores signed variable, let's say we h
    3.3.3 we can also use escape sequence as char literal, there are two kinds: \ followed by character and \x followed by hex or \ followed by 1-3 oct digits (usually ascii)
 
 Note: suffix and prefix can only modify the type listed above, e.g. 10f is not allowed, since 10 is not floating point
+Note2: sometimes we initialize a type with a different type of literal, e.g. double a = 10. Actually there is an implicit type conversion happens
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Note: if class doesn't specify the default init, in some case each member will f
 5. we can both define and declare a variable. define involves memory distribution, and can be done only once, we use extern to declare which can be override by initialize
 
 Note: (a). can't initialize an extern declarition inside a function
-      (b). the usage of extern: we define a global variable in some source file, then we declare it extern in a head file, then every file which includes this head file will know the existence of that variable, and when linking, it will try to find the place where we define it
+      (b). the usage of extern: we define a global variable in some source file, then we declare it extern in a head file, then every file which includes this head file will know the existence of that variable, and when linking, it will try to find the place where we define it, see https://blog.csdn.net/zhuralll111/article/details/34850523
 
 PS: notice when we define a variable inside a function, this variable has no external linkage, so we can't further extern it to give it a extern linkage
 
@@ -116,7 +117,7 @@ PS2: what does (*) means?
 12.1 const variable can't change its value, so it has to be initialized
 12.2 const variable can't get itself involved in all operations, those changes it value are forbidden, but notice assign a non-const by const is allowed and vice versa
 12.3 const variable initialized by compile time constant will be replaced by this constant when compiled, so it is local to file by default(so that seperate compile can make such replacement), in which case if we define a const variable in each file as if they are different variable. This can be override   /*if its value is not a compile time constant (like return value of a function),*/   by keyword extern BOTH in its definition and declaration, which means if we want to share a const variable in multiple file, we add extern keyword
-12.4 we can define a reference to const(aka const reference) by define "const type &r", note only a const reference can refer to a const, and we can't change the value of a const reference, this design allow us to use const reference as argument of function and save sapce for not copying argument
+12.4 we can define a reference to const(aka const reference) by define "const type &r", note only a const reference can refer to a const, and we can't change the value of a const reference, this design allow us to use const reference as argument of function and save space for not copying argument
 12.5 a const reference can be initialized by not only a const variable, but anything that can be cast into a const variable, e.g, "const int &r = 1.0" is legal, and is done by first create a temporary variable "const int tmp = 1.0" and then r refers to that variable. Note that temporary is not always necessary, if we don't need casting, then we don't need this temporary. This is important if we refer to a non-const variable, and try to assign this variable with new value. It is obvious that if a temporary is created, then assign a new value won't change const reference since it refers to that temporary, but if no temporary is created, assignment will change it!!! So const reference only make a restrict on what we can do on them rather than the variable we bind it with that we refer to
 12.6 same rule applies to pointer to reference, and we can also define const pointer, to see if const modify pointer or object it points, read from right to left, this two const won't affect each other, which means we can change the object a const pointer points to, or we can change which object a pointer to reference points to
 12.7 notice we can not assign a non-const reference or pointer to const with a const variable or its address, while the initialization of the reverse is allowed. In other words, const constrain the operations we can do on them
@@ -158,4 +159,3 @@ Note: have to go back to https://stackoverflow.com/questions/17241614/what-expre
 ----------------------------------------------------------------------------------------------------------------------------------
 
 16. when head file is renewed, we need to recompile every source file which includes that head file
-

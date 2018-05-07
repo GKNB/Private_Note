@@ -42,7 +42,7 @@ PS: another confusing concept is the value of expression, like *p++, we know p++
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
-5. comment sign can only be put somewhere a tab or space is allowed. Notice inside a pair of "", an extra space or tab will give different result, so comment sign is not allowed here (at least /* is not allowed)
+5. comment sign can only be put somewhere a tab or space is allowed(including the middle of identifier, although it is not allowed to add a space in side identifier). Notice inside a pair of "", an extra space or tab will give different result, so comment sign is not allowed here
 
 Note: nested comment is another error prone stuff, for /**/ pair, nest is not allowed, but for //, it doesn't matter to put more than one // in the same line. So the best way to do block comment is adding // in front of each line
 
@@ -57,7 +57,7 @@ PS: invalid input could happen when there is a type mismatch, but the underlying
 
 7. instead of input by hand, we can also use file redirection to input from file. we can do program_name < input_file >output_file
 
-Note: the mechanism is connected to stream in linux ..... Also we might need to do ./program_file if it is not in PATH. instead of input by hand, we can also use file redirection to input from file. we can do program_name < input_file >output_file
+Note: the mechanism is connected to stream in linux ..... Also we might need to do ./program_file if it is not in PATH.
 
 
 

@@ -1,4 +1,4 @@
-THESE ARE THE NOTES AND COMMENTS ABOUT C++_PRIMER_V5, SECOND CHAPTER
+THESE ARE THE NOTES AND COMMENTS ABOUT C++_PRIMER_V5, THIRD CHAPTER
 
 NOTATION:
  
@@ -11,5 +11,29 @@ LET'S START!!!
         
 ----------------------------------------------------------------------------------------------------------------------------------
 
-1 when head file is renewed, we need to recompile every source file which includes that head file
+1. When we use using syntax, we can not do using A,B; Instead we have to do it separately, like using A; using B;
+
+NOTE: NEVER put using in header file!!!
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+2. std::string summary
+
+2.1 initialize:
+2.1.1 default initialize: an empty string is generated
+2.1.2 initialize by another std::string
+2.1.3 initialize by a literal string. Notice the '\0' won't be included, and the initialization will stop when it see a '\0', the rest part will be neglected. See trial1, s6
+2.1.4 initialize by (n, c), which generate cccccc (n copies of c), where n is int and c is char
+
+PS: Difference b/w copy initialization and direct initialization: copy initialization is used as T a = b, only valid if T supports initialization with one argument. Direct initialization looks like T a(argument_list)
+PS2: Notice copy initialization is different from copy, for a class T, copy needs overload of "=", but copy initialization need constructor which takes one argument, see copy_initialization.C
+
+2.2 operation:
+2.2.1 streaming operator. cout will output the entire string, including \0 and those behind it. cin will input string separate by whitespace and newline
+2.2.2 getline(is,si,c). it has three argument: first one is istream object, second one is string, third one is the char that if it is found, stop getline, default is '\n', it returns is(streaming object) like cin/cout returns lhs
+2.2.3 empty(), size(), clear(), [], comparsion
+2.2.4 + operator, which concatenate two string
+
+Note: the return type of size is string::size_type, so be careful when try to access the element of string by [] operator: the operand would be better to have a type of string::size_type instead of int, which can be done by decltype(a.size())
+
 
