@@ -26,9 +26,11 @@ PS: what's the order of function check before running?
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
-3. we can think of the stream variable as something that interact with I/O, e.g, cout is an ostream object, and it interact with screen (window the program is running)
+3. we can think of the stream variable as something that interact with I/O, e.g, cout is an ostream object, and it interact with screen (window the program is running). When we are dealing with fstream or stringstream, things are similiar: we output/input thing with file/string, just like how we treat screen.
 
 PS: what is a stream basically?
+PS: when and how to use cerr and clog?
+Note: when doing output in debug, make sure each time buffer is flushed, can be done by endl
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -42,9 +44,10 @@ PS: another confusing concept is the value of expression, like *p++, we know p++
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
-5. comment sign can only be put somewhere a tab or space is allowed(including the middle of identifier, although it is not allowed to add a space in side identifier). Notice inside a pair of "", an extra space or tab will give different result, so comment sign is not allowed here
+5. comment sign can only be put somewhere a tab or space is allowed(including the middle of identifier, although it is not allowed to add a space inside identifier). Notice inside a pair of "", an extra space or tab will give different result, so comment sign is not allowed here
 
 Note: nested comment is another error prone stuff, for /**/ pair, nest is not allowed, but for //, it doesn't matter to put more than one // in the same line. So the best way to do block comment is adding // in front of each line
+Note: when doing multiline comment, it's better to add a * at the beginning of each line commented out
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -52,6 +55,7 @@ Note: nested comment is another error prone stuff, for /**/ pair, nest is not al
 6. in order to read an unknown number of items, we can use a while loop to handle the thing that we read everytime, and test istream object as the loop condition, e.g. if we want to read from command line, we can do while(cin>>var_name), and if we read from file, we can do while(file_object >> var_name >> ...) to read line. This will only end when the istream is invalid, which would happen if: 1. when we hit end-of-file sign; 2. when there is an error (invalid input)
 
 PS: invalid input could happen when there is a type mismatch, but the underlying mechanism (for stream) is a mystery at this moment????? (int a; while(cin>>a); we type: 3.3, what is a?)
+Note: This is the answer to the question in PS. What "<<" operator does is basically "extraction", that is, it extracte valid information from buffer. When "<<" operator shows up, it will first look at buffer, if buffer is empty, it will prompt user to do input(which happens in most cases), then it will try to read data from buffer as long as possible. If it can't get anything, then it will return false. So if we input 3.3, it will first get 3, return true, and then see ".", return false.
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
