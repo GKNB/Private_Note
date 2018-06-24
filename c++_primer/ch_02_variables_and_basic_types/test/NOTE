@@ -1,0 +1,5 @@
+1. See main01.C for unsigned vs signed: signed can be transformed to unsigned
+
+2. See main02.C for benefits of list initialization (no information lost)
+
+3. See main03.C for usage of extern

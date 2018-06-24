@@ -52,7 +52,7 @@ Note2: sometimes we initialize a type with a different type of literal, e.g. dou
 4.3 default init for built-in type gets 0 out of any func, UB in func; for class, depends on definition
 
 Note: if class doesn't specify the default init, in some case each member will follow the default init, like std::array (Is that always true?)
-
+Note2: list initialization is better than other ways of initialization, since type is protected (like we won't have out-of-range or loss of imformation), see https://stackoverflow.com/questions/18222926/why-is-list-initialization-using-curly-braces-better-than-the-alternatives for detail
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -60,6 +60,7 @@ Note: if class doesn't specify the default init, in some case each member will f
 
 Note: (a). can't initialize an extern declarition inside a function
       (b). the usage of extern: we define a global variable in some source file, then we declare it extern in a head file, then every file which includes this head file will know the existence of that variable, and when linking, it will try to find the place where we define it, see https://blog.csdn.net/zhuralll111/article/details/34850523
+      (c). connection between declaration and definition is done in linking
 
 PS: notice when we define a variable inside a function, this variable has no external linkage, so we can't further extern it to give it a extern linkage
 
@@ -159,3 +160,5 @@ Note: have to go back to https://stackoverflow.com/questions/17241614/what-expre
 ----------------------------------------------------------------------------------------------------------------------------------
 
 16. when head file is renewed, we need to recompile every source file which includes that head file
+
+Note: that means when writting makefile, source should depend on all header it includes
