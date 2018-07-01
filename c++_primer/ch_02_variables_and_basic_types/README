@@ -20,9 +20,16 @@ PS: 1. what does compilier do when compiling
     3. where does the information of type of each variable stored
 
 
+
 ----------------------------------------------------------------------------------------------------------------------------------
 
-2. if we assign an out-of-range value to unsigned variable, we get modulos of the initial value, if we did that to signed variable, UB!!!
+1.5. Different compilier might have different max size for built-in type. For example, on linux and windows, size of int are different. But c++ standard specify the minimun of that size. sizeof() function tells that parameter.
+1.7. Definition: byte: 8 bits, or smallest chunk of addressable memory; word: the number of bits that are manipulated as a unit by the particular CPU of the computer. Some data structure, like std::string, is memory aligned, which means they always start with the position where a word begins, rather than some random bytes so that when CPU access it, it can be faster. See main04 for detail.
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+2. if we assign an out-of-range value to unsigned variable, we get modulos of the initial value, if we did that to signed variable, UB!!! (of course we can assign an signed with an in-range unsigned)
    similiar, if an expression involves both unsigned and signed variable, those signed will be transformed into unsigned, including all intermediate result
 
 Note: this rule actually describe how c++ stores signed variable, let's say we have a signed variable t, then t%(2^32) gives its unsigned value, but we also know that when c++ stores this variable, it doesn't know its type, so they share the same value in their address
