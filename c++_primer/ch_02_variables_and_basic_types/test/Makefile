@@ -24,5 +24,12 @@ try03: declare03.h adda.o main03.o
 main04.o: main04.C
 	g++ -c -o main04.o main04.C $(FLAG)
 
+main05.o: main05.C
+	g++ -c -o main05.o main05.C $(FLAG)
+
 try04: main04.o
 	g++ -o try04 main04.o $(FLAG)
+
+try05: main05.o
+	g++ -o try05 main05.o $(FLAG)
+

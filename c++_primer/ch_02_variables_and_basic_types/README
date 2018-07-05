@@ -57,15 +57,17 @@ Note2: sometimes we initialize a type with a different type of literal, e.g. dou
 4.1 initialization is not assignment since no initial value is abandoned. we can initialize a variable by earlier variable defined in the same definition
 4.2 we can do initialization for int in 4 ways: a=0; a(0); a={0}; a{0}; those involve {} is called list initialization, a warning occurs when list initialization cause loss of information
 4.3 default init for built-in type gets 0 out of any func, UB in func; for class, depends on definition
+4.4 we can use braced initializer to initialize in almost all cases, and to assign in some limited cases
 
 Note: if class doesn't specify the default init, in some case each member will follow the default init, like std::array (Is that always true?)
 Note2: list initialization is better than other ways of initialization, since type is protected (like we won't have out-of-range or loss of imformation), see https://stackoverflow.com/questions/18222926/why-is-list-initialization-using-curly-braces-better-than-the-alternatives for detail
+
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
 5. we can both define and declare a variable. define involves memory distribution, and can be done only once, we use extern to declare which can be override by initialize
 
-Note: (a). can't initialize an extern declarition inside a function
+Note: (a). can't initialize an extern declarition inside a function (note definin variable inside function make it local)
       (b). the usage of extern: we define a global variable in some source file, then we declare it extern in a head file, then every file which includes this head file will know the existence of that variable, and when linking, it will try to find the place where we define it, see https://blog.csdn.net/zhuralll111/article/details/34850523
       (c). connection between declaration and definition is done in linking
 
@@ -76,14 +78,13 @@ PS: notice when we define a variable inside a function, this variable has no ext
 
 6. limits on identifier, the following are banned: start with number, start with 2 underscore, start with 1 underscore and a upper case letter, start with underscore outside function
 
-PS: where do we use them?
-
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
 7. A scope is usually within {}, eg. a for and if statement is a scope, so variable defined inside if statement also only has scope lifetime. We can access global scope by using scope operator "::", but other scope (like a scope defined by for) do not have specific name
 
-PS: how can I access parameter defined in parent scope?
+PS: how can I access variable defined in parent scope?  We can't do that directly!!!!!
+Note: a variable's lifetime starts with the point where it is first defined, so we can write something like: int a; { int &ra = a; int a}. Notice ra follows the outer a, and modifing inner a won't affect ra, see try05
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -97,7 +98,7 @@ PS: what are those different type of declarator?
 
 9.1 reference(&) is an alias of an variable, it's not an object, so no memory is distrubuted, operations on reference actually are on the object it binds
 9.2 reference has to be initialized(bind with other variable), after that we can't rebind it with other variable
-9.3 type of reference and that of the object it binds must match, and reference can't refer to expression and literal(which are rvalue)
+9.3 type(not including const) of reference and that of the object it binds must match, and reference can't refer to expression and literal(which are rvalue)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -106,7 +107,7 @@ PS: what are those different type of declarator?
 10.2 a valid pointer can only points to the following three things:
 10.2(a) an object(can access object it points to by *)
 10.2(b) null(can't access the object it points to), it has types(like int or double), and is defined by nullptr or 0(here 0 is overload as nullptr), can't be initialized by int value object even if it is 0, it's usually a good idea to initialize all pointer, if no object is binded, by 0
-10.2(c) location immediately past an object(can't access the object it points to)
+10.2(c) location immediately past an object(can't access the object it points to, useful in iteration and iterator)
 10.2(d) otherwise it is invalid pointer, but in most case it will only give a runtime error, or no apparent error
 10.3 pointer can also be used as condition or in comparision, but only valid ones can be used, otherwise it will be UB
 10.4 void pointer can store the address of variable of any type, because of that we can't access the variable it points to since we don't know the type, we can only compare, return or pass to a function, and assign to a void. if we want to use the objext it points to, we need to perform cast like void *p; (int*)p; *p=0;
